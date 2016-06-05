@@ -1,10 +1,11 @@
 import requests
 
 class Requester(object):
-    def __init__(self, uri='127.0.0.1', port=4646, timeout=5, version='v1'):
+    def __init__(self, uri='127.0.0.1', port=4646, timeout=5, region=None, version='v1'):
         self.uri = uri
         self.port = port
         self.timeout = timeout
+        self.region = region
         self.version = version
         self.session = requests.Session()
 
@@ -22,6 +23,12 @@ class Requester(object):
 
     def get(self, endpoint, params=None):
         url = self._urlBuilder(endpoint)
+
+        if self.region:
+            if not params:
+                params = {'region':self.region}
+            else:
+                params["region"] = self.region
 
         try:
             response = self.session.get(url,
