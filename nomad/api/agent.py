@@ -38,9 +38,12 @@ class Agent(object):
 
             response = self._requester.post(url, params=kwargs["params"])
 
-            return response.json()
-        except ValueError:
-            return response.status_code
+            try:
+                return response.json()
+            except ValueError:
+                return response.status_code
+        except:
+            raise
 
     def join_agent(self, addresses):
         params = "address=" + "&address=".join(addresses)
