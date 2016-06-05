@@ -21,7 +21,7 @@ def test_get_servers(nomad_setup):
     assert isinstance(s, list) == True
 
 def test_join_agent(nomad_setup):
-    r = nomad_setup.agent.join_agent("nope")
+    r = nomad_setup.agent.join_agent(["nope"])
     assert r["num_joined"] == 0
 
 def test_update_servers(nomad_setup):
