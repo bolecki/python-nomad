@@ -47,6 +47,15 @@ class Requester(object):
     def post(self, endpoint, params=None, data=None, json=None, headers=None):
         url = self._urlBuilder(endpoint)
 
+        if self.region:
+            if not params:
+                params = {'region': self.region}
+            else:
+                if isinstance(params, dict):
+                    params["region"] = self.region
+                else:
+                    params += "&region={region}".format(region=self.region)
+
         try:
             response = self.session.post(
                 url, params=params, json=json, headers=headers, data=data, timeout=self.timeout)

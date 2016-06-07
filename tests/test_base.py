@@ -41,3 +41,21 @@ def test_base_get_no_params():
     url = n.requester._endpointBuilder('jobs')
     r = n.requester.get(url)
     assert r.status_code == 200
+
+def test_base_post_no_params():
+    n = nomad.Nomad(host=common.IP, port=common.NOMAD_PORT, region="global")
+    url = n.requester._endpointBuilder('job', 'example', 'evaluate')
+    r = n.requester.post(url)
+    assert r.status_code == 200
+
+def test_base_post_dict_params():
+    n = nomad.Nomad(host=common.IP, port=common.NOMAD_PORT, region="global")
+    url = n.requester._endpointBuilder('job', 'example', 'evaluate')
+    r = n.requester.post(url, params={'key': 'value'})
+    assert r.status_code == 200
+
+def test_base_post_string_params():
+    n = nomad.Nomad(host=common.IP, port=common.NOMAD_PORT, region="global")
+    url = n.requester._endpointBuilder('job', 'example', 'evaluate')
+    r = n.requester.post(url, params="key=value")
+    assert r.status_code == 200
