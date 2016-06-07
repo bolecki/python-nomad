@@ -10,7 +10,7 @@ class Nomad(object):
         self.timeout = timeout
         self.version = version
 
-        self.requester = api.Requester(host, port, timeout, version)
+        self.requester = api.Requester(host, port, timeout, region, version)
 
         self._jobs = api.Jobs(self.requester)
         self._job = api.Job(self.requester)

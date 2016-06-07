@@ -29,3 +29,15 @@ def test_base_delete_connection_error():
         host="162.16.10.102", port=common.NOMAD_PORT, timeout=0.001)
     with pytest.raises(nomad.api.exceptions.BaseNomadException):
         j = n.job.deregister_job("example")
+
+def test_base_get_params():
+    n = nomad.Nomad(host=common.IP, port=common.NOMAD_PORT, region="global")
+    url = n.requester._endpointBuilder('jobs')
+    r = n.requester.get(url, params={'key': 'value'})
+    assert r.status_code == 200
+
+def test_base_get_no_params():
+    n = nomad.Nomad(host=common.IP, port=common.NOMAD_PORT, region="global")
+    url = n.requester._endpointBuilder('jobs')
+    r = n.requester.get(url)
+    assert r.status_code == 200
